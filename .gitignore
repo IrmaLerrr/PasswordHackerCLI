@@ -2,8 +2,10 @@
 .idea
 *.iml
 out/
+build/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.gradle
 
 ### Eclipse ###
 .apt_generated

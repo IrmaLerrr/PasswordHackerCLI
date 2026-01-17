@@ -1,4 +1,4 @@
-package passHacker;
+package server;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileManager {
-    private static final String FILE_PATH = "./src/data/passwords.txt";
+    private static final String FILE_PATH = "./src/main/resources/passwords.txt";
 
     public static List<String> getPassList(){
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
@@ -25,4 +25,3 @@ public class FileManager {
         return new ArrayList<>();
     }
 }
-

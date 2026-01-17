@@ -1,4 +1,4 @@
-package passHacker;
+package hacker;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

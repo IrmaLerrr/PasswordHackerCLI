@@ -1,4 +1,4 @@
-package passHacker;
+package hacker;
 
 public class Main {
     private static final String SERVER_ADDRESS = "localhost";
