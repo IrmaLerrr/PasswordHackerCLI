@@ -54,27 +54,21 @@ public class PassHacker {
     }
 
     public List<String> generateAllCombinations(String pass) {
-        List<List<String>> listOfQueue = new ArrayList<>();
+        List<String> result = new ArrayList<>();
+        result.add("");
 
-        listOfQueue.add(new LinkedList<>());
-        listOfQueue.getFirst().add("");
-        char[] chars = pass.toCharArray();
-
-        for (int i = 0; i < chars.length; i++) {
-            List<String> queueFrom = listOfQueue.get(i);
-            listOfQueue.add(new LinkedList<>());
-            List<String> queueTo = listOfQueue.get(i + 1);
-            for (String s : queueFrom) {
-                String c = String.valueOf(chars[i]);
-                if (c.matches("\\d")) {
-                    queueTo.add(s + c);
-                } else {
-                    queueTo.add(s + c.toLowerCase());
-                    queueTo.add(s + c.toUpperCase());
+        for (char c : pass.toCharArray()) {
+            List<String> newList = new ArrayList<>();
+            for (String s : result) {
+                newList.add(s + Character.toLowerCase(c));
+                if (Character.isLetter(c)) {
+                    newList.add(s + Character.toUpperCase(c));
                 }
             }
+            result = newList;
         }
-        return listOfQueue.getLast();
+
+        return result;
     }
 }
 
