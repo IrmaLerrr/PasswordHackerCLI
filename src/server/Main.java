@@ -2,6 +2,7 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.util.List;
 import java.util.Random;
 
 public class Main {
@@ -11,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(SERVER_PORT)) {
             System.out.println("Server started!");
-            String pass = generateSimplePass();
+            String pass = generateDictionaryBasedPass();
             System.out.println("Correct password: " + pass);
             while (true) {
                 try {
@@ -24,8 +25,6 @@ public class Main {
                         if (msgIn.equals(pass)) output.writeUTF("Connection success!");
                         else output.writeUTF("Wrong password!");
                     }
-//                    RequestManager manager = new RequestManager(input, output);
-//                    manager.start();
                 } catch (EOFException e2) {
                     System.out.println("The client disconnected.");
                 } catch (SocketException e3) {
@@ -39,7 +38,8 @@ public class Main {
         }
     }
 
-    private static String generateSimplePass(){
+    @Deprecated
+    private static String generateSimplePass() {
         Random random = new Random();
         StringBuilder password = new StringBuilder(4);
 
@@ -48,5 +48,18 @@ public class Main {
         }
 
         return password.toString();
+    }
+
+    private static String generateDictionaryBasedPass() {
+        Random random = new Random();
+        List<String> passList = FileManager.getPassList();
+        String pass = passList.get(random.nextInt(passList.size()));
+        pass = pass.chars()
+                .mapToObj(c -> (char) c)
+                .map(c -> random.nextBoolean() ? Character.toUpperCase(c) : Character.toLowerCase(c))
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+
+        return pass;
     }
 }
